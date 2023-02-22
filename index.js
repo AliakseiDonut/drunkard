@@ -1,0 +1,91 @@
+let cards = [];
+
+function createCards(array){
+    for(let i = 6; i <= 14; i++){
+        for(let j = 0; j < 4; j++){
+            array.push(i);
+        }
+    }
+}
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+createCards(cards)
+shuffle(cards);
+
+console.log(cards);
+
+let firstDeck = [];
+let secondDeck = [];
+
+function createDecks(firstDeck, secondDeck){
+    for(let i = 0; i < cards.length; i++){
+        if(i % 2 !== 0){
+            firstDeck.push(cards[i]);
+        }else{
+            secondDeck.push(cards[i]);
+        }
+    }
+}
+
+createDecks(firstDeck, secondDeck);
+
+console.log(firstDeck);
+console.log(secondDeck);
+
+const startButton = document.querySelector(".start");
+const toEndButton = document.querySelector(".to-end");
+
+let comparisonArr = [];
+
+let counter = 0;
+
+
+
+
+const doStep = () => {
+    console.log(firstDeck.at(-1));
+    console.log(secondDeck.at(-1));
+    console.log(`${++counter} step`);
+    comparisonArr.push(firstDeck.at(-1), secondDeck.at(-1));
+    firstDeck.pop();
+    secondDeck.pop();
+    let length = comparisonArr.length;
+    console.log(comparisonArr);
+    if((comparisonArr[length - 2] > comparisonArr[length - 1]) || (comparisonArr[length - 2] === 6 && comparisonArr[length - 1] === 14)){
+        firstDeck.unshift(...comparisonArr);
+        comparisonArr = [];
+        console.log(firstDeck);
+        console.log(secondDeck);
+    }else if((comparisonArr[length - 1] > comparisonArr[length - 2]) || 
+    (comparisonArr[length - 1] === 6 && comparisonArr[length - 2] === 14)){
+        secondDeck.unshift(...comparisonArr);
+        comparisonArr = [];
+        console.log(firstDeck);
+        console.log(secondDeck);
+    }else{
+        firstDeck.unshift(comparisonArr[length - 2]);
+        secondDeck.unshift(comparisonArr[length - 1]);
+        comparisonArr = [];
+    }
+}
+
+
+button1.addEventListener('click', (event) => {
+    button2.classList.remove('hidden');
+    button1.textContent = "Следующий ход";
+    doStep();
+});
+
+button2.addEventListener('click', (event) => {
+    while(firstDeck[0] !== undefined && secondDeck[0] !== undefined){
+        doStep();
+    }
+});
+
+

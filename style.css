@@ -1,0 +1,67 @@
+body{
+    background-color: rgb(33, 41, 56);
+}
+
+.container{
+    margin: 0 auto;
+    max-width: 1200px;
+}
+
+.steps{
+    text-align: center;
+    color: #fff;
+    margin-bottom: 50px;
+}
+
+.decks{
+    display: flex;
+    justify-content: space-between;
+}
+
+.deck{
+    width: 180px;
+    height: 250px;
+    background-color: #ff0000;
+    border: 1px solid rgb(255, 255, 255);
+    box-shadow: 5px 5px 10px rgb(43, 41, 41);
+    border-radius: 10px;
+}
+
+.cards{
+    display: flex;
+    justify-content: center;
+}
+
+.card{
+    width: 180px;
+    height: 250px;
+    background-color: #fff;
+    border: 1px solid rgb(255, 0, 0);
+    box-shadow: 5px 5px 10px rgb(43, 41, 41);
+    border-radius: 10px;
+    margin-bottom: 100px;
+    margin-right: 50px;
+}
+
+.first-deck{
+
+}
+
+.second-deck{
+
+}
+
+.buttons{
+    display: flex;
+    justify-content: center;
+}
+
+.button{
+    margin-right: 30px;
+    height: 50px;
+    width: 130px;
+}
+
+.hidden{
+    display: none;
+}
