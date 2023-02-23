@@ -45,6 +45,8 @@ const secondDeckBlock = document.querySelector(".second-deck");
 const firstCard = document.querySelector(".first-card");
 const secondCard = document.querySelector(".second-card");
 const steps = document.querySelector(".steps");
+const gamesQuantity = document.querySelector(".games-quantity");
+
 
 let comparisonArr = [];
 
@@ -79,10 +81,9 @@ const doStep = () => {
         console.log(firstDeck);
         console.log(secondDeck);
     }else{
-        comparisonArr.push(firstDeck.at(-1), secondDeck.at(-1));
-        firstDeck.pop();
-        secondDeck.pop();
-        steps.textContent = `Спор`;
+        firstDeck.unshift(comparisonArr[length - 2]);
+        secondDeck.unshift(comparisonArr[length - 1])
+        comparisonArr = [];
     }
 }
 
@@ -97,6 +98,7 @@ startButton.addEventListener('click', (event) => {
     steps.classList.remove("hidden");
     firstDeckBlock.classList.remove("hidden");
     secondDeckBlock.classList.remove("hidden");
+    gamesQuantity.classList.add("hidden");
 
     firstDeckBlock.textContent = firstDeck.length; 
     secondDeckBlock.textContent = secondDeck.length;  
