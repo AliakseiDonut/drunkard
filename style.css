@@ -4,7 +4,7 @@ body{
 
 .container{
     margin: 0 auto;
-    max-width: 1200px;
+    padding: 100px;
 }
 
 .steps{
@@ -19,6 +19,12 @@ body{
 }
 
 .deck{
+    display: flex;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    
     width: 180px;
     height: 250px;
     background-color: #ff0000;
@@ -33,6 +39,11 @@ body{
 }
 
 .card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 60px;
+    
     width: 180px;
     height: 250px;
     background-color: #fff;
@@ -60,6 +71,11 @@ body{
     margin-right: 30px;
     height: 50px;
     width: 130px;
+    border-radius: 10px;
+}
+.button:hover{
+    background-color: #ffffff98;
+    cursor: pointer;
 }
 
 .hidden{
