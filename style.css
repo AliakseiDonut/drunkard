@@ -54,14 +54,6 @@ body{
     margin-right: 50px;
 }
 
-.first-deck{
-
-}
-
-.second-deck{
-
-}
-
 .buttons{
     display: flex;
     justify-content: center;
@@ -86,4 +78,9 @@ body{
     border-radius: 5px;
     border: 3px solid black;
     width: 171px;
+}
+
+.winner{
+    color:#fff;
+    text-align: center;
 }

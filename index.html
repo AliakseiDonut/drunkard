@@ -10,6 +10,7 @@
     <body>
         <div class="container">
             <h1 class="steps hidden"></h1>
+            <h1 class="winner hidden"></h1>
             <div class="decks">
                 <div class="deck first-deck hidden"></div>
                 <div class="cards">
@@ -21,8 +22,14 @@
             <div class="buttons">
                 <button class="button start">Начать</button>
                 <button class="button to-end hidden">Доиграть до конца</button>
-                <input class="input games-quantity" type="text" placeholder="Введите количество партий">
+                <input class="input games-quantity" type="number" placeholder="Введите количество партий">
             </div>
+            <ul class="statistics hidden">
+                <li class="min-steps"></li>
+                <li class="max-steps"></li>
+                <li class="first-player-wins"></li>
+                <li class="second-player-wins"></li>
+            </ul>
         </div>
     <script src="index.js"></script>
 </body>
