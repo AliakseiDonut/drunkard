@@ -79,7 +79,6 @@ const doStep = () => {
     firstDeck.pop();
     secondDeck.pop();
     let length = comparisonArr.length;
-    console.log(comparisonArr);
     firstCard.textContent = numberToCard(comparisonArr[length - 2]); 
     secondCard.textContent = numberToCard(comparisonArr[length - 1]);  
 
@@ -119,12 +118,10 @@ const doStep = () => {
         console.log(firstDeck);
         console.log(secondDeck);
     }else{
-        stepsCounter++;
-        console.log(`${stepsCounter} step`);
-        steps.textContent = `${stepsCounter} ход`;
-        firstDeck.unshift(comparisonArr[length - 2]);
-        secondDeck.unshift(comparisonArr[length - 1])
-        comparisonArr = [];
+        steps.textContent = `Спор`;
+        comparisonArr.push(firstDeck.at(-1), secondDeck.at(-1));
+        firstDeck.pop();
+        secondDeck.pop();
         console.log(firstDeck);
         console.log(secondDeck);
     }
@@ -135,7 +132,7 @@ startButton.addEventListener('click', (event) => {
     if(startButton.textContent === "Рестарт"){
         location.reload();
     }
-    if(firstDeck.length === 36 || secondDeck.length === 36){
+    if(firstDeck[0] === undefined || secondDeck[0] === undefined){
         startButton.textContent = "Рестарт"
         firstCard.classList.add("hidden");
         secondCard.classList.add("hidden");
@@ -146,7 +143,7 @@ startButton.addEventListener('click', (event) => {
         statistics.classList.add("hidden");
 
         winner.classList.remove("hidden");
-        steps.textContent = `Ходов: ${counter}`;
+        steps.textContent = `Ходов: ${stepsCounter}`;
         if(firstDeck.length === 36){
             winner.textContent = `Победил: Игрок 1`;
         }else{
@@ -185,7 +182,7 @@ toEndButton.addEventListener('click', (event) => {
     gamesQuantity.classList.add("hidden");
     winner.classList.remove("hidden");
     steps.textContent = `Ходов: ${stepsCounter}`;
-    if(firstDeck.length === 36){
+    if(secondDeck[0] === undefined){
         winner.textContent = `Победил: Игрок 1`;
     }else{
         winner.textContent = `Победил: Игрок 2`;
@@ -210,7 +207,7 @@ gamesQuantity.addEventListener('keyup', (event) => {
                 minSteps = stepsCounter;
             }
             
-            if(firstDeck.length === 36){
+            if(secondDeck[0] === undefined){
                 firstPlayerWinsCounter++;
             }else{
                 secondPlayerWinsCounter++;
