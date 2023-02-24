@@ -33,6 +33,20 @@ function createDecks(firstDeck, secondDeck){
     }
 }
 
+function numberToCard(number){
+    if(number === 11){
+        return "J";
+    }else if(number === 12){
+        return "Q";
+    }else if(number === 13){
+        return "K";
+    }else if(number === 14){
+        return "A";
+    }else{
+        return number;
+    }
+}
+
 createDecks(firstDeck, secondDeck);
 
 console.log(firstDeck);
@@ -48,11 +62,14 @@ const steps = document.querySelector(".steps");
 const gamesQuantity = document.querySelector(".games-quantity");
 const winner = document.querySelector(".winner");
 const statistics = document.querySelector(".statistics");
-
+const minStepsLi = document.querySelector(".min-steps");
+const maxStepsLi = document.querySelector(".max-steps");
+const firstPlayerWinsLi = document.querySelector(".first-player-wins");
+const secondPlayerWinsLi = document.querySelector(".second-player-wins");
 
 let comparisonArr = [];
 
-let counter = 0;
+let stepsCounter = 0;
 
 const doStep = () => {
     console.log(firstDeck.at(-1));
@@ -63,48 +80,48 @@ const doStep = () => {
     secondDeck.pop();
     let length = comparisonArr.length;
     console.log(comparisonArr);
-    firstCard.textContent = comparisonArr[length - 2]; 
-    secondCard.textContent = comparisonArr[length - 1];  
-    
+    firstCard.textContent = numberToCard(comparisonArr[length - 2]); 
+    secondCard.textContent = numberToCard(comparisonArr[length - 1]);  
+
     
     if(comparisonArr[length - 2] === 6 && comparisonArr[length - 1] === 14){
         firstDeck.unshift(...comparisonArr);
         comparisonArr = []; 
-        counter++;
-        console.log(`${counter} step`);
-        steps.textContent = `${counter} ход`;
+        stepsCounter++;
+        console.log(`${stepsCounter} step`);
+        steps.textContent = `${stepsCounter} ход`;
         console.log(firstDeck);
         console.log(secondDeck);
     }else if(comparisonArr[length - 1] === 6 && comparisonArr[length - 2] === 14){
         comparisonArr = comparisonArr.reverse();
         secondDeck.unshift(...comparisonArr);
         comparisonArr = [];
-        counter++;
-        console.log(`${counter} step`);
-        steps.textContent = `${counter} ход`;
+        stepsCounter++;
+        console.log(`${stepsCounter} step`);
+        steps.textContent = `${stepsCounter} ход`;
         console.log(firstDeck);
         console.log(secondDeck);
     }else if((comparisonArr[length - 2] > comparisonArr[length - 1])){
         firstDeck.unshift(...comparisonArr);
         comparisonArr = []; 
-        counter++;
-        console.log(`${counter} step`);
-        steps.textContent = `${counter} ход`;
+        stepsCounter++;
+        console.log(`${stepsCounter} step`);
+        steps.textContent = `${stepsCounter} ход`;
         console.log(firstDeck);
         console.log(secondDeck);
     }else if(comparisonArr[length - 1] > comparisonArr[length - 2]){
         comparisonArr = comparisonArr.reverse();
         secondDeck.unshift(...comparisonArr);
         comparisonArr = [];
-        counter++;
-        console.log(`${counter} step`);
-        steps.textContent = `${counter} ход`;
+        stepsCounter++;
+        console.log(`${stepsCounter} step`);
+        steps.textContent = `${stepsCounter} ход`;
         console.log(firstDeck);
         console.log(secondDeck);
     }else{
-        counter++;
-        console.log(`${counter} step`);
-        steps.textContent = `${counter} ход`;
+        stepsCounter++;
+        console.log(`${stepsCounter} step`);
+        steps.textContent = `${stepsCounter} ход`;
         firstDeck.unshift(comparisonArr[length - 2]);
         secondDeck.unshift(comparisonArr[length - 1])
         comparisonArr = [];
@@ -126,6 +143,8 @@ startButton.addEventListener('click', (event) => {
         firstDeckBlock.classList.add("hidden");
         secondDeckBlock.classList.add("hidden");
         gamesQuantity.classList.add("hidden");
+        statistics.classList.add("hidden");
+
         winner.classList.remove("hidden");
         steps.textContent = `Ходов: ${counter}`;
         if(firstDeck.length === 36){
@@ -144,6 +163,7 @@ startButton.addEventListener('click', (event) => {
         firstDeckBlock.classList.remove("hidden");
         secondDeckBlock.classList.remove("hidden");
         gamesQuantity.classList.add("hidden");
+        statistics.classList.add("hidden");
 
         firstDeckBlock.textContent = firstDeck.length; 
         secondDeckBlock.textContent = secondDeck.length;  
@@ -164,7 +184,7 @@ toEndButton.addEventListener('click', (event) => {
     secondDeckBlock.classList.add("hidden");
     gamesQuantity.classList.add("hidden");
     winner.classList.remove("hidden");
-    steps.textContent = `Ходов: ${counter}`;
+    steps.textContent = `Ходов: ${stepsCounter}`;
     if(firstDeck.length === 36){
         winner.textContent = `Победил: Игрок 1`;
     }else{
@@ -175,11 +195,39 @@ toEndButton.addEventListener('click', (event) => {
 gamesQuantity.addEventListener('keyup', (event) => {
     let value = gamesQuantity.value;
     if(event.code === "Enter"){
-        for(let i = 0; i <= value; i++){
+        let maxSteps = 0;
+        let minSteps = 1000000;
+        let firstPlayerWinsCounter = 0;
+        let secondPlayerWinsCounter = 0;
+        for(let i = 0; i < value; i++){
             while(firstDeck[0] !== undefined && secondDeck[0] !== undefined){
                 doStep();
             }
+            if(stepsCounter > maxSteps){
+                maxSteps = stepsCounter;
+            }
+            if(stepsCounter < minSteps){
+                minSteps = stepsCounter;
+            }
+            
+            if(firstDeck.length === 36){
+                firstPlayerWinsCounter++;
+            }else{
+                secondPlayerWinsCounter++;
+            }
+            
+            stepsCounter = 0;
+            cards = [];
+            firstDeck = [];
+            secondDeck = [];
+            createCards(cards)
+            shuffle(cards);
+            createDecks(firstDeck, secondDeck);
         }
+        maxStepsLi.textContent = `Максимальное количество ходов:${maxSteps}`;
+        minStepsLi.textContent = `Минимальное количество ходов:${minSteps}`;
+        firstPlayerWinsLi.textContent = `Процент побед Игрока 1:${firstPlayerWinsCounter / value * 100}%`;
+        secondPlayerWinsLi.textContent = `Процент побед Игрока 2:${secondPlayerWinsCounter / value * 100}%`;
         statistics.classList.remove("hidden");
     }
 });
